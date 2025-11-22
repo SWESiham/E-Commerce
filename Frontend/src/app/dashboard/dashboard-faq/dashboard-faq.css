@@ -1,0 +1,46 @@
+.faq-dashboard {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+.add-form input, .add-form textarea, .add-form select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.add-form button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.faq-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.faq-table th, .faq-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.faq-table th {
+  background: #f7f7f7;
+}
+button.delete {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,46 @@
+<div class="signup-container">
+    <div class="signup-card">
+      <div class="left">
+        <div class="logo">
+          <h3>FASCO</h3>
+        </div>
+  
+        <h1>Login to your account</h1>
+        <p class="subtitle">Welcome back!</p>
+  
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <label>Email</label>
+          <input type="email" formControlName="email" placeholder="Enter your email" />
+  
+          <label>Password</label>
+          <input type="password" formControlName="password" placeholder="Enter your password" />
+  
+          <button type="submit" class="btn-main">
+           Sign In
+          </button>
+  
+          <p class="login-link">
+            Don't have an account?
+            <a routerLink="/register">Sign Up</a>
+          </p>
+        </form>
+      </div>
+  
+      <div class="right">
+        <img src="assets/Georgia Bevey Smith.jpeg" alt="Model" />
+        <div class="overlay">
+          <div class="testimonial">
+            <p class="quote">
+              “Untitled Labs were a breeze to work alongside, we can’t recommend them
+              enough. We launched 6 months earlier than expected and are growing 30% MoM.”
+            </p>
+            <p class="author">
+              Siham Said <br />
+              <span>Founder, Fasco</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

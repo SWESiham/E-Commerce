@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <h3 class="mb-3 text-center">{{ editing ? 'Edit Category' : 'Add New Category' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="row g-3 form-section">
+    <div class="col-md-5">
+      <label class="form-label small fw-semibold">Name</label>
+      <input formControlName="name" type="text" class="form-control form-control-sm" placeholder="Enter category name" />
+    </div>
+
+    <div class="col-md-5">
+      <label class="form-label small fw-semibold">Slug</label>
+      <input formControlName="slug" type="text" class="form-control form-control-sm" placeholder="Auto or custom slug" />
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary w-100 btn-sm">
+        {{ editing ? 'Update' : 'Add' }}
+      </button>
+    </div>
+
+    <div *ngIf="editing" class="text-center mt-2">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </form>
+
+  <hr class="my-4" />
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-bordered table-striped table-hover table-sm text-center mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Slug</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categories; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ cat.name }}</td>
+          <td>{{ cat.slug }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-1" (click)="openEdit(cat)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="removeCategory(cat)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!categories?.length">
+          <td colspan="4" class="text-muted py-3">No categories found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

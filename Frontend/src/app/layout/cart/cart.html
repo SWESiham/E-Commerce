@@ -1,0 +1,70 @@
+<main class="container">
+  <h1>Shopping Cart</h1>
+
+  <div class="cart-grid">
+    <div class="cart-items">
+      @for (c of cartList.items ; track c.productId._id) {
+      <div class="cart-item">
+        <div class="product-info">
+          <img src="{{static}}/{{ c.productId.image }}" alt="{{c.productId.title}}">
+          <div>
+            <h3>{{c.productId.title}}</h3>
+            <p>{{c.productId.price}}</p>
+          </div>
+        </div>
+
+        <div class="quantity">
+          <button (click)="decreaseQuantity(c)">-</button>
+          <span>{{c.quantity}}</span>
+
+          <button (click)="increaseQuantity(c)">+</button>
+        </div>
+
+        <div class="price">{{ c.productId.price * c.quantity }}</div>
+
+
+        <button class="remove-btn" (click)="deleteProduct(c.productId._id)">🗑</button>
+      </div>
+      }
+    </div>
+
+    <!-- Order Summary -->
+    <div class="summary">
+      <h3>Order Summary</h3>
+      <div class="voucher">
+        <input type="text" placeholder="Discount voucher" />
+        <button>Apply</button>
+      </div>
+
+      <div class="summary-line">
+        <span>Sub Total</span>
+        <span>{{cartList.totalPrice}}</span>
+      </div>
+              @if (cartList.totalPrice >= 5000) {
+       <div class="summary-line">
+          <span>Discount (10%)</span>
+          <span>-1,000 USD</span>
+        </div>
+      }
+
+      <div class="summary-line">
+        <span>Delivery fee</span>
+        <span>50 USD</span>
+      </div>
+
+      <div class="summary-total">
+        <span>Total</span>
+        @if (cartList.totalPrice >= 5000) {
+        <span>{{cartList.totalPrice - 1000 + 50 }}</span>
+        }
+        @else(){
+        <span>{{cartList.totalPrice + 50 }}</span>
+        }
+      </div>
+
+      <button class="checkout-btn" (click)="checkout()">Checkout Now</button>
+
+      <p class="note">🕒 90 Day Limited Warranty against manufacturer’s defects.</p>
+    </div>
+  </div>
+</main>

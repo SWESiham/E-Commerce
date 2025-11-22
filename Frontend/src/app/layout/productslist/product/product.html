@@ -1,0 +1,26 @@
+<div class="product-grid">
+  <div class="product-card" [routerLink]="['/product', prod.slug]">
+    <span class="tag">{{prod.subCategoryId.name}}</span>
+
+    <div class="product-image-box">
+      <img src="{{staticURL + prod.image}}" alt="{{prod.title}}" class="product-img">
+    </div>
+
+    <h3 class="product-name">{{prod.title}}</h3>
+
+    <div class="product-details">
+      <span class="description">{{prod.description}}</span>
+      <span class="price">${{prod.price}}</span>
+
+      @if(prod.stock >= 1) {
+        <!-- <span class="stock">{{prod.stock}}</span> -->
+        <div class="buttons-group">
+          <!-- <button class="btn-add">Add to Cart</button>
+          <button class="btn-buy">Buy Now</button> -->
+        </div>
+      } @else {
+        <span class="stockout">Out of stock</span>
+      }
+    </div>
+  </div>
+</div>

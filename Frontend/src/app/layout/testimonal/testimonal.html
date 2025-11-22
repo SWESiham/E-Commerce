@@ -1,0 +1,37 @@
+<div class="testimonial-container">
+  <div class="testimonial-card">
+    <h2>Share Your Feedback</h2>
+    <p class="subtitle">
+      We’d love to hear your thoughts! Please share your experience with us.
+    </p>
+
+    <form [formGroup]="testimonialForm" (ngSubmit)="submitTestimonial()">
+      <div class="form-group">
+        <label for="message">Your Feedback</label>
+        <textarea
+          id="message"
+          formControlName="message"
+          rows="5"
+          placeholder="Write your testimonial here..."
+        ></textarea>
+        <div
+          class="error"
+          *ngIf="testimonialForm.get('message')?.invalid && testimonialForm.get('message')?.touched"
+        >
+          Feedback message is required.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="testimonialForm.invalid"
+        class="btn-submit"
+      >
+        Submit Feedback
+      </button>
+    </form>
+
+    <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+</div>

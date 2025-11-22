@@ -1,0 +1,50 @@
+<div class="faq-dashboard">
+  <h2>Manage FAQs</h2>
+
+  <div class="add-form">
+    <input type="text" placeholder="Question" [(ngModel)]="newFaq.question" />
+    <textarea placeholder="Answer" [(ngModel)]="newFaq.answer"></textarea>
+    <select [(ngModel)]="newFaq.category">
+      <option value="">Select Category</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+    <button (click)="addFaq()">Add FAQ</button>
+  </div>
+
+  <table class="faq-table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of faqs">
+        <td *ngIf="editingFaq?._id !== f._id">{{ f.question }}</td>
+        <td *ngIf="editingFaq?._id === f._id">
+          <input [(ngModel)]="editingFaq.question" />
+        </td>
+
+        <td *ngIf="editingFaq?._id !== f._id">{{ f.answer }}</td>
+        <td *ngIf="editingFaq?._id === f._id">
+          <textarea [(ngModel)]="editingFaq.answer"></textarea>
+        </td>
+
+        <td>
+          <span *ngIf="editingFaq?._id !== f._id">{{ f.category || '-' }}</span>
+          <select *ngIf="editingFaq?._id === f._id" [(ngModel)]="editingFaq.category">
+            <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          </select>
+        </td>
+
+        <td>
+          <button *ngIf="editingFaq?._id !== f._id" (click)="editFaq(f)">Edit</button>
+          <button *ngIf="editingFaq?._id === f._id" (click)="saveFaq()">Save</button>
+          <button class="delete" (click)="deleteFaq(f._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

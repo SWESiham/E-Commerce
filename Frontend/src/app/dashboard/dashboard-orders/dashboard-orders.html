@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <h3 class="mb-4 fw-bold">Manage Orders</h3>
+
+  <div *ngIf="!orders.length" class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2">Loading orders...</p>
+  </div>
+
+  <div class="table-responsive" *ngIf="orders.length">
+    <table class="table table-hover align-middle shadow-sm">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th> </th>
+          <th>Created At</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let order of orders; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <div>
+              <div class="fw-semibold">{{ order.userId?.name || 'N/A' }}</div>
+              <small class="text-muted">{{ order.userId?.email }}</small>
+            </div>
+          </td>
+          <td class="fw-semibold text-primary">
+            ${{ order.totalPrice | number: '1.2-2' }}
+          </td>
+          <td>
+            <span class="badge {{ getStatusBadgeClass(order.status) }}">
+              {{ order.status | titlecase }}
+            </span>
+          </td>
+          <td>
+          </td>
+          <td>{{ order.createdAt | date: 'short' }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <select
+                class="form-select form-select-sm"
+                [(ngModel)]="order.status"
+                (change)="updatestatus(order._id, order.status)"
+              >
+                <option *ngFor="let option of statusOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+
+              <button
+                class="btn btn-sm btn-outline-primary"
+                [routerLink]="['/order', order._id]"
+              >
+                View
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

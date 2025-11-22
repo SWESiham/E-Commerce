@@ -1,0 +1,26 @@
+<div class="products-page">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 (click)="getProducts()">Categories</h2>
+
+    <div *ngFor="let cat of categoriesWithSubs" class="category-box">
+      <h3 (click)="filterByCategory(cat._id)" [class.active]="selectedCategory === cat._id">
+        {{ cat.name }}
+      </h3>
+      <ul class="sub-list" *ngIf="selectedCategory === cat._id">
+        <li *ngFor="let sub of cat.subcategories"
+            (click)="filterBySubCategory(sub._id)"
+            [class.active]="selectedSubCategory === sub._id">
+          {{ sub.name }}
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Product Grid -->
+  <div class="product-grid">
+    @for (myproduct of products; track myproduct._id) {
+      <app-product [prod]="myproduct"></app-product>
+    }
+  </div>
+</div>

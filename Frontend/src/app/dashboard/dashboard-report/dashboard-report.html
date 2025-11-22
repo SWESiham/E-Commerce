@@ -1,0 +1,217 @@
+<div class="reports-container">
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">Sales Analytics Dashboard</h1>
+    <button class="export-btn" (click)="exportReport()">
+      Export Report
+    </button>
+  </div>
+
+  <!-- Date Range Filter -->
+  <div class="filter-section">
+    <div class="filter-card">
+      <h3 class="filter-title">Date Range</h3>
+      <div class="date-inputs">
+        <div class="input-group">
+          <label class="input-label">Start Date</label>
+          <input type="date" class="date-input" [(ngModel)]="startDate" (change)="onDateRangeChange()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">End Date</label>
+          <input type="date" class="date-input" [(ngModel)]="endDate" (change)="onDateRangeChange()">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="summary-cards" *ngIf="salesSummary?.overallStats?.[0]">
+      <div class="summary-row">
+        <div class="summary-card primary">
+          <div class="card-content">
+            
+            <div class="card-text">
+              <div class="card-label">Total Revenue</div>
+              <div class="card-value">${{ (salesSummary.overallStats[0].totalSalesAmount) }}.00</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="summary-card success">
+          <div class="card-content">
+           
+            <div class="card-text">
+              <div class="card-label">Total Orders</div>
+              <div class="card-value">{{ (salesSummary.overallStats[0].totalPurchases) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="summary-row">
+        <div class="summary-card info">
+          <div class="card-content">
+            <div class="card-text">
+              <div class="card-label">Items Sold</div>
+              <div class="card-value">{{ (salesSummary.overallStats[0].totalQuantitySold) }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="summary-card warning">
+          <div class="card-content">
+            <div class="card-text">
+              <div class="card-label">Avg. Order Value</div>
+              <div class="card-value">{{ (getAverageOrderValue()) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading sales data...</p>
+  </div>
+
+ 
+
+  <!-- Data Grid -->
+  <div *ngIf="!loading && salesSummary" class="data-grid">
+    
+    <!-- Daily Revenue Table -->
+    <div class="data-card" *ngIf="chartData.dailyRevenue.length > 0">
+      <div class="data-header">
+        <h3 class="data-title">Daily Revenue Trend</h3>
+        <span class="data-count">{{ chartData.dailyRevenue.length }} days</span>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Revenue</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of chartData.dailyRevenue">
+              <td class="date">{{ (day.date) }}</td>
+              <td class="revenue">${{ (day.revenue) }}.00</td>
+              <td class="orders">{{ day.orders }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="data-card" *ngIf="chartData.topProducts.length > 0">
+      <div class="data-header">
+        <h3 class="data-title">Top Products by Revenue</h3>
+        <span class="data-count">{{ chartData.topProducts.length }} products</span>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Revenue</th>
+              <th>Quantity Sold</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of chartData.topProducts">
+              <td class="product-name">{{ product.title }}</td>
+              <td class="revenue">${{ (product.revenue) }}.00</td>
+              <td class="quantity">{{ (product.quantity) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Monthly Revenue -->
+    <div class="data-card" *ngIf="chartData.monthlyRevenue.length > 0">
+      <div class="data-header">
+        <h3 class="data-title">Monthly Revenue</h3>
+        <span class="data-count">{{ chartData.monthlyRevenue.length }} months</span>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Revenue</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let month of chartData.monthlyRevenue">
+              <td class="period">{{ month.period }}</td>
+              <td class="revenue">${{ (month.revenue) }}.00</td>
+              <td class="orders">{{ month.orders }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="data-card" *ngIf="chartData.categories.length > 0">
+      <div class="data-header">
+        <h3 class="data-title">Revenue by Category</h3>
+        <span class="data-count">{{ chartData.categories.length }} categories</span>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Revenue</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of chartData.categories">
+              <td class="category">{{ category._id || 'Uncategorized' }}</td>
+              <td class="revenue">${{ (category.revenue) }}.00</td>
+              <td class="quantity">{{ (category.quantity) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Top Customers -->
+    <div class="data-card" *ngIf="chartData.topCustomers.length > 0">
+      <div class="data-header">
+        <h3 class="data-title">Top Customers</h3>
+        <span class="data-count">{{ chartData.topCustomers.length }} customers</span>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Total Spent</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of chartData.topCustomers">
+              <td class="customer-name">{{ customer.name }}</td>
+              <td class="email">{{ customer.email }}</td>
+              <td class="revenue">${{ (customer.totalSpent) }}.00</td>
+              <td class="orders">{{ customer.totalPurchases }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>

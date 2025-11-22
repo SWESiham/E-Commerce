@@ -1,0 +1,289 @@
+   /* Using the exact CSS provided by the user */
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       font-family: 'Inter', sans-serif;
+   }
+
+   /* Parent container centers the card */
+   .signup-container {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       min-height: 100vh;
+       /* Changed from fixed height to min-height for better flow */
+       background: linear-gradient(135deg, #f6f7fb, #e9ecf3);
+       /* padding: 0px; */
+   }
+
+   /* The card */
+   .signup-card {
+       display: flex;
+       width: 100%;
+       max-width: 1200px;
+       height: 850px;
+       /* Adjusted height slightly to accommodate all fields */
+       background: #fff;
+       border-radius: 20px;
+       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+       overflow: hidden;
+   }
+
+   /* Left Section */
+   .left {
+       flex: 1;
+       padding: 50px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+   }
+
+   .logo {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       margin-bottom: 25px;
+   }
+
+   .logo svg {
+       width: 35px;
+       height: 35px;
+       color: #000;
+   }
+
+   .logo h3 {
+       font-size: 24px;
+       font-weight: 600;
+   }
+
+   h1 {
+       margin-bottom: 10px;
+       font-size: 28px;
+   }
+
+   .subtitle {
+       color: #777;
+       margin-bottom: 25px;
+   }
+
+   form {
+       display: flex;
+       flex-direction: column;
+       max-height: 80vh;
+       /* Limit height to prevent overflow on small screens */
+       overflow-y: auto;
+       /* Allow scrolling for long forms */
+       padding-right: 15px;
+       /* Space for scrollbar */
+   }
+
+   label {
+       font-size: 14px;
+       font-weight: 500;
+       margin-bottom: 6px;
+       color: #333;
+   }
+
+   input,
+   select {
+       padding: 12px;
+       border: 1px solid #ddd;
+       border-radius: 10px;
+       margin-bottom: 20px;
+       font-size: 14px;
+       transition: border-color 0.3s ease;
+       width: 100%;
+       /* Ensure inputs fill container */
+   }
+
+   input:focus,
+   select:focus {
+       border-color: #000;
+       outline: none;
+   }
+
+   /* Address Card Styling */
+   .address-card {
+       border: 1px solid #eee;
+       padding: 20px;
+       border-radius: 12px;
+       margin-bottom: 25px;
+       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+   }
+
+   .address-card h4 {
+       font-size: 16px;
+       font-weight: 600;
+       margin-bottom: 15px;
+       color: #000;
+   }
+
+   .address-fields {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+       gap: 10px 15px;
+   }
+
+   .address-fields .input-group {
+       display: flex;
+       flex-direction: column;
+   }
+
+   .address-fields input,
+   .address-fields select {
+       margin-bottom: 0;
+   }
+
+   .checkbox-container {
+       display: flex;
+       align-items: center;
+       margin-top: 15px;
+       font-size: 14px;
+   }
+
+   .checkbox-container input[type="checkbox"] {
+       margin-right: 8px;
+       margin-bottom: 0;
+       width: auto;
+   }
+
+   /* Button Styling */
+   .btn-main {
+       background-color: #000;
+       color: #fff;
+       padding: 12px;
+       border: none;
+       border-radius: 10px;
+       cursor: pointer;
+       font-weight: 500;
+       transition: all 0.3s;
+       margin-top: 10px;
+   }
+
+   .btn-main:hover {
+       background-color: #222;
+   }
+
+   .btn-main:disabled {
+       opacity: 0.6;
+       cursor: not-allowed;
+   }
+
+   .login-link {
+       margin-top: 20px;
+       font-size: 14px;
+       color: #555;
+       cursor: pointer;
+   }
+
+   .login-link a {
+       color: #000;
+       font-weight: 600;
+       text-decoration: none;
+       transition: color 0.2s;
+   }
+
+   
+
+   /* Right Side */
+   .right {
+       flex: 1;
+       position: relative;
+       background-color: #f9f9f9;
+   }
+
+   .right img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+   }
+
+   .overlay {
+       position: absolute;
+       bottom: 0;
+       left: 0;
+       right: 0;
+       padding: 40px;
+       background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+       color: #fff;
+   }
+
+   .quote {
+       font-size: 18px;
+       /* Increased font size */
+       font-style: italic;
+       line-height: 1.6;
+       margin-bottom: 15px;
+   }
+
+   .author {
+       font-weight: 600;
+       font-size: 16px;
+   }
+
+   .author span {
+       font-weight: 400;
+       font-size: 14px;
+       color: #ddd;
+       display: block;
+   }
+
+   /* Responsive */
+   @media (max-width: 900px) {
+       .signup-card {
+           margin: auto;
+           flex-direction: column;
+           height: auto;
+           max-width: 500px;
+           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+       }
+
+       .left {
+           padding: 30px;
+       }
+
+       .right {
+           height: 250px;
+       }
+
+       /* Reset form max-height and scrolling on smaller screens if content fits */
+       form {
+           max-height: none;
+           overflow-y: visible;
+           padding-right: 0;
+       }
+
+       .address-fields {
+           grid-template-columns: 1fr;
+           gap: 0;
+       }
+
+       .address-fields .input-group {
+           margin-bottom: 15px;
+       }
+   }
+
+   @media (max-width: 600px) {
+       .signup-container {
+           padding: 10px;
+       }
+
+       .left {
+           padding: 20px;
+       }
+
+       h1 {
+           font-size: 24px;
+       }
+
+       .overlay {
+           padding: 20px;
+       }
+
+       .quote {
+           font-size: 16px;
+       }
+   }

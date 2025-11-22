@@ -1,0 +1,253 @@
+<div class="account-container">
+  <!-- Header -->
+  <div class="account-header">
+    <div class="header-content">
+      <h1 class="account-title">
+        <i class="icon-user">👤</i>
+        Account Management
+      </h1>
+      <p class="account-subtitle">Manage your personal information and delivery addresses</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Loading your profile...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && user" class="account-content">
+    
+    <!-- Profile Section -->
+    <div class="section-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <i class="icon-profile">📝</i>
+          Profile Information
+        </h2>
+        <p class="card-subtitle">Update your basic information and contact details</p>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="profile-form">
+        <div class="form-grid">
+          <!-- Name Field -->
+          <div class="form-group">
+            <label class="form-label">
+              Full Name
+              <span class="required-star">*</span>
+            </label>
+            <input 
+              type="text" 
+              formControlName="name"
+              class="form-input"
+              placeholder="Enter your full name"
+              [class.input-error]="profileForm.get('name')?.touched && profileForm.get('name')?.invalid">
+            <div *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.invalid" class="error-message">
+              Name is required
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label class="form-label">
+              Email Address
+              <span class="required-star">*</span>
+            </label>
+            <input 
+              type="email" 
+              formControlName="email"
+              class="form-input"
+              placeholder="your.email@example.com"
+              [class.input-error]="profileForm.get('email')?.touched && profileForm.get('email')?.invalid">
+            <div *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['required']" class="error-message">
+              Email is required
+            </div>
+            <div *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['email']" class="error-message">
+              Please enter a valid email address
+            </div>
+          </div>
+
+          <!-- Phone Field -->
+          <div class="form-group">
+            <label class="form-label">
+              Phone Number
+              <span class="required-star">*</span>
+            </label>
+            <input 
+              type="tel" 
+              formControlName="phoneNumber"
+              class="form-input"
+              placeholder="+1 (555) 123-4567"
+              [class.input-error]="profileForm.get('phoneNumber')?.touched && profileForm.get('phoneNumber')?.invalid">
+            <div *ngIf="profileForm.get('phoneNumber')?.touched && profileForm.get('phoneNumber')?.invalid" class="error-message">
+              Phone number is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="profileForm.invalid || saving">
+            <i class="icon-save">💾</i>
+            {{ saving ? 'Updating...' : 'Update Profile' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Addresses Section -->
+    <div class="section-card">
+      <div class="card-header">
+        <div class="header-content">
+          <h2 class="card-title">
+            <i class="icon-address">📍</i>
+            Delivery Addresses
+          </h2>
+          <p class="card-subtitle">Manage your shipping addresses for faster checkout</p>
+        </div>
+        <button 
+          type="button" 
+          class="btn btn-outline btn-icon"
+          (click)="addNewAddress()"
+          [disabled]="addressForms.length >= 5">
+          <i class="icon-plus">➕</i>
+          Add New Address
+        </button>
+      </div>
+
+      <div *ngIf="addressForms.length === 0" class="empty-state">
+        <i class="empty-icon">🏠</i>
+        <h3>No Addresses Added</h3>
+        <p>Add your first delivery address to get started</p>
+        <button 
+          type="button" 
+          class="btn btn-primary"
+          (click)="addNewAddress()">
+          Add Your First Address
+        </button>
+      </div>
+
+      <form *ngIf="addressForms.length > 0" [formGroup]="addressesForm" (ngSubmit)="updateAddresses()" class="addresses-form">
+        <div class="default-address-info" *ngIf="getDefaultAddressIndex() !== -1">
+          <i class="info-icon">💡</i>
+          <span>Address #{{ getDefaultAddressIndex() + 1 }} is set as your default shipping address</span>
+        </div>
+
+        <div formArrayName="addresses" class="addresses-grid">
+          <div *ngFor="let address of addressForms.controls; let i = index" 
+               [formGroupName]="i"
+               class="address-card"
+               [class.default-address]="isDefaultAddress(i)">
+            
+            <!-- Address Header -->
+            <div class="address-header">
+              <div class="address-title">
+                <h4>Address #{{ i + 1 }}</h4>
+                <span *ngIf="isDefaultAddress(i)" class="default-badge">
+                  <i class="icon-star">⭐</i>
+                  Default Address
+                </span>
+              </div>
+              <div class="address-actions">
+                <button 
+                  *ngIf="!isDefaultAddress(i)"
+                  type="button" 
+                  class="btn btn-text btn-sm"
+                  (click)="setDefaultAddress(i)">
+                  <i class="icon-star-outline">☆</i>
+                  Set as Default
+                </button>
+                <button 
+                  *ngIf="addressForms.length > 1"
+                  type="button" 
+                  class="btn btn-text btn-danger btn-sm"
+                  (click)="removeAddress(i)">
+                  <i class="icon-delete">🗑️</i>
+                  Remove
+                </button>
+              </div>
+            </div>
+
+            <!-- Address Form Fields -->
+            <div class="form-grid compact">
+              <!-- City -->
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input 
+                  type="text" 
+                  formControlName="city"
+                  class="form-input"
+                  placeholder="Enter city name"
+                  [class.input-error]="addressForms.at(i).get('city')?.touched && addressForms.at(i).get('city')?.invalid">
+                <div *ngIf="addressForms.at(i).get('city')?.touched && addressForms.at(i).get('city')?.invalid" class="error-message">
+                  City is required
+                </div>
+              </div>
+
+              <!-- Street -->
+              <div class="form-group">
+                <label class="form-label">Street</label>
+                <input 
+                  type="text" 
+                  formControlName="street"
+                  class="form-input"
+                  placeholder="Enter street name"
+                  [class.input-error]="addressForms.at(i).get('street')?.touched && addressForms.at(i).get('street')?.invalid">
+                <div *ngIf="addressForms.at(i).get('street')?.touched && addressForms.at(i).get('street')?.invalid" class="error-message">
+                  Street is required
+                </div>
+              </div>
+
+              <!-- Building Number -->
+              <div class="form-group">
+                <label class="form-label">Building Number</label>
+                <input 
+                  type="text" 
+                  formControlName="buildingNumber"
+                  class="form-input"
+                  placeholder="Building no."
+                  [class.input-error]="addressForms.at(i).get('buildingNumber')?.touched && addressForms.at(i).get('buildingNumber')?.invalid">
+                <div *ngIf="addressForms.at(i).get('buildingNumber')?.touched && addressForms.at(i).get('buildingNumber')?.invalid" class="error-message">
+                  Building number is required
+                </div>
+              </div>
+
+              <!-- Address Type -->
+              <div class="form-group">
+                <label class="form-label">Address Type</label>
+                <select 
+                  formControlName="addressType"
+                  class="form-select">
+                  <option value="home">🏠 Home</option>
+                  <option value="work">🏢 Work</option>
+                  <option value="other">📦 Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <div class="actions-info">
+            <p class="info-text">
+              <i class="icon-info">💡</i>
+              You can add up to 5 delivery addresses. Default address will be used for shipping.
+            </p>
+          </div>
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="addressesForm.invalid || saving">
+            <i class="icon-save">💾</i>
+            {{ saving ? 'Updating...' : 'Save Addresses' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

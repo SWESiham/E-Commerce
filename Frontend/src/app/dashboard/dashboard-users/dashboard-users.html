@@ -1,0 +1,93 @@
+<div class="edit-form">
+  <form [formGroup]="editForm" (ngSubmit)="updateUser()">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" formControlName="name" />
+    </div>
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number:</label>
+      <input type="text" formControlName="phoneNumber" />
+    </div>
+
+    <div class="form-group">
+      <label>City:</label>
+      <input type="text" formControlName="city" />
+    </div>
+
+    <div class="form-group">
+      <label>Street:</label>
+      <input type="text" formControlName="street" />
+    </div>
+
+    <div class="form-group">
+      <label>Building Number:</label>
+      <input type="text" formControlName="buildingNumber" />
+    </div>
+
+    <div class="form-group">
+      <label>Address Type:</label>
+      <input type="text" formControlName="addressType" />
+    </div>
+
+    <div class="form-group">
+      <label>Role:</label>
+      <select formControlName="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <div class="btns">
+      <button class="btn btn-update" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+
+<div class="retrieve_Users">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>city</th>
+        <th>street</th>
+        <th>building Number</th>
+        <th>address Type</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(u of users; track u._id){
+      <tr>
+        <td>{{ $index + 1 }}</td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.phoneNumber }}</td>
+        <td>{{ u.addresses[0]?.city }}</td>
+        <td>{{ u.addresses[0]?.street }}</td>
+        <td>{{ u.addresses[0]?.buildingNumber }}</td>
+        <td>{{ u.addresses[0]?.addressType }}</td>
+        <td>{{ u.role }}</td>
+        <td>
+          <div class="actions">
+            <button class="btn btn-edit"  (click)="editUser(u)">Edit</button>
+            <button class="btn btn-delete" (click)="deleteUser(u._id)">Delete</button>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+

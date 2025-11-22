@@ -1,0 +1,43 @@
+<div class="faq-section">
+  <h2>Frequently Asked Questions</h2>
+  <div *ngFor="let f of faqs; let i = index" class="faq-item">
+    <div class="faq-question" (click)="toggleFAQ(i)">
+      <h4>{{ f.question }}</h4>
+      <span>{{ openIndex === i ? '−' : '+' }}</span>
+    </div>
+    <div class="faq-answer" *ngIf="openIndex === i">
+      <p>{{ f.answer }}</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="testimonials-wrap container">
+  <h2 class="section-title">What people say</h2>
+  <p class="section-sub">Real feedback from our customers</p>
+
+  <div *ngIf="!testimonials?.length" class="empty-state">
+    <p>No testimonials yet. Be the first to share your feedback!</p>
+  </div>
+
+  <div class="grid" *ngIf="testimonials?.length">
+    <article class="card" *ngFor="let t of testimonials">
+      <div class="card-header">
+        <div class="avatar" aria-hidden="true">
+          <span>{{ (t.userId?.name || 'U').charAt(0) }}</span>
+        </div>
+        <div class="meta">
+          <div class="name">{{ t.userId?.name || 'Anonymous' }}</div>
+          <div class="date">{{ t.createdAt ? (t.createdAt | date:'mediumDate') : '' }}</div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <svg class="quote" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.17 6A5.003 5.003 0 0 0 2 11c0 2.76 2.24 5 5 5h.5A1.5 1.5 0 0 0 9 14.5V11c0-1.65-1.35-3-3-3H7.17zM17.17 6A5.003 5.003 0 0 0 12 11c0 2.76 2.24 5 5 5h.5A1.5 1.5 0 0 0 19 14.5V11c0-1.65-1.35-3-3-3h1.17z"/></svg>
+        <p class="message">{{ t.message }}</p>
+      </div>
+
+    
+    </article>
+  </div>
+</div>

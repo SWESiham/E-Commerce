@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .navbar {
+    padding: 10px 30px;
+  box-shadow: none !important;
+    background-color: #fff;
+  }
+  
+  .navbar-brand {
+    font-size: 36px;
+    font-weight: 700;
+    font-family: "Playfair Display", serif;
+    color: #000 !important;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #000 !important;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 20px;
+    transition: color 0.2s ease;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #6b6b6b !important; 
+  }
+  
+  .signIn-btn {
+    width: 130px;
+    height: 45px;
+    background-color: #000;
+    color: white;
+    border-radius: 8px;
+    font-size: 15px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signIn-btn:hover {
+    background-color: #333;
+  }
+  
+  .dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  @media (max-width: 992px) {
+    .navbar-nav {
+      text-align: center;
+      margin-top: 10px;
+    }
+  
+    .nav-link {
+      margin: 10px 0 !important;
+    }
+  
+    .signIn-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .dropdown-menu {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 28px;
+    }
+  
+    .nav-link {
+      font-size: 16px;
+    }
+  }
+  

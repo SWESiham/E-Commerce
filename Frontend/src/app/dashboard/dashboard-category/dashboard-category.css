@@ -1,0 +1,50 @@
+.container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+h3 {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+label {
+  color: #555;
+}
+
+.table {
+  font-size: 0.9rem;
+}
+
+.table th {
+  background-color: #f1f3f5;
+  color: #333;
+}
+
+.btn {
+  border-radius: 6px;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+.table-responsive {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f9f9f9;
+}

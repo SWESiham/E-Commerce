@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h3 class="mb-3 text-center">{{ isEdit ? 'Edit Subcategory' : 'Add New Subcategory' }}</h3>
+
+  <form [formGroup]="formGroup" (ngSubmit)="addOrUpdateSubCategory()" class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label small">Name</label>
+      <input formControlName="name" type="text" class="form-control form-control-sm" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label small">Slug</label>
+      <input formControlName="slug" type="text" class="form-control form-control-sm" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label small">Category</label>
+      <select formControlName="categoryId" class="form-select form-select-sm">
+        <option value="">— Select Category —</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+    </div>
+
+    <div class="col-12 text-center mt-3">
+      <button type="submit" class="btn btn-primary btn-sm me-2">
+        {{ isEdit ? 'Update' : 'Add' }}
+      </button>
+      <button *ngIf="isEdit" type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm">
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <hr class="my-4" />
+
+  <table class="table table-bordered table-striped table-sm text-center">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sub of subcategories; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ sub.name }}</td>
+        <td>{{ sub.slug }}</td>
+        <td>{{ getCategoryName(sub) || '—' }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-1" (click)="editSubCategory(sub)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteSubCategory(sub._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

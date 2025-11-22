@@ -1,0 +1,38 @@
+<div class="product-details">
+    <img src="{{staticImage+product.image}}" alt="{{product.title}}">
+    <div class="info">
+        <h4>{{product.categoryId.name}}</h4>
+        <h1>{{product.title}}</h1>
+        <p>{{product.description}}</p>
+        <div class="price">${{product.price}}</div>
+
+
+
+
+
+        @if(product.stock>=5){
+        <div class="quantity">
+            <button (click)="decreaseQuantity()">-</button>
+            <span>{{quantity}}</span>
+            <button (click)="increaseQuantity()">+</button>
+        </div>
+        <div class="actions">
+            <button class="add-cart" (click)="addToCart()">Add to Cart</button>
+            <button class="buy-now" (click)="BuyNow()">BUY NOW</button>
+        </div>
+        }@else {
+        <div class="stockout">Out of stock</div>
+        }
+    </div>
+</div>
+
+
+<h2 class="text-center mt-5">You might also like</h2>
+
+<div class="related-products-grid">
+    @for (item of relatedProducts; track item._id){
+
+    <app-product [prod]="item"></app-product>
+
+    }
+</div>

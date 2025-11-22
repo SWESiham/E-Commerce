@@ -1,0 +1,25 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="logo">
+      <button routerLink="/">Back</button>
+      <h2>Dashboard</h2>
+    </div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a routerLink="home">Home</a></li>
+        <li><a routerLink="product">Products</a></li>
+        <li><a routerLink="user">Users</a></li>
+        <li><a routerLink="category">Category</a></li>
+        <li><a routerLink="subcategory">Sub-Category</a></li>
+        <li><a routerLink="order">Orders</a></li>
+        <li><a routerLink="testimonals">Testimonials</a></li>
+        <li><a routerLink="faq">FAQs</a></li>
+        <!-- <li><a routerLink="report">Reports</a></li> -->
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

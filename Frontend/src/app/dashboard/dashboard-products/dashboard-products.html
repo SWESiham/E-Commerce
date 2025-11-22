@@ -1,0 +1,101 @@
+<div class="add-product-container">
+  <h2>Add New Product</h2>
+
+  <form [formGroup]="formGroup" (ngSubmit)="isEdit? updateProduct() : addProduct()">
+    <div class="form-group">
+      <label for="name">Product Name</label>
+      <input type="text" id="name"  placeholder="Enter product name" formControlName="title" required />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" rows="4"  placeholder="Write short description" formControlName="description" required></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="price">Price ($)</label>
+        <input type="number" id="price"  placeholder="0.00" formControlName="price" required />
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" id="stock"  placeholder="Available quantity" formControlName="stock" required />
+      </div>
+    </div>
+
+   <div class="form-group">
+  <label for="category">Category</label>
+  <select id="category" required formControlName="category">
+    <option value="">Select Category</option>
+    <option *ngFor="let cat of categoriesWithSubs" [value]="cat._id">
+      {{ cat.name }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="sub-category">Sub Category</label>
+  <select id="sub-category" required formControlName="subCategory">
+    <option value="">Select Sub Category</option>
+    <option *ngFor="let sub of filteredSubcategories" [value]="sub._id">
+      {{ sub.name }}
+    </option>
+  </select>
+</div>
+
+    <div class="form-group">
+      <label for="image">Product Image</label>
+      <input type="file" (change)="onChange($event)"/>
+    </div>
+
+    <button type="submit" class="submit-btn">{{isEdit ? 'update Product' : 'Add Product' }}</button>
+  </form>
+</div>
+
+
+
+<div class="retrieve_Products">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(item of products; track item._id){
+      <tr>
+        <td>{{ $index + 1 }}</td>
+        <td>
+          <img [src]="static + item.image" alt="Product Image">
+        </td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.slug }}</td>
+        <td>${{ item.price }}</td>
+         @if(item.stock===0){
+           <td class="fw-bold text-danger">Out of Stock</td>
+        }@else{
+        <td>{{ item.stock }}</td>
+        }
+        <td>{{ item.categoryId?.name }}</td>
+        <td>{{ item.subCategoryId?.name }}</td>
+        <td>
+          <div class="actions">
+            <button class="btn btn-edit" (click)="editProduct(item)">Edit</button>
+            <button class="btn btn-delete" (click)="deleteProduct(item._id)">Delete</button>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,32 @@
+<div class="testimonial-container">
+  <h2>Testimonials Management</h2>
+
+  <div *ngIf="loading" class="loading">Loading testimonials...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <table *ngIf="!loading && testimonials.length" class="testimonial-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Rejection Reason</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of testimonials">
+        <td>{{ t.userId?.name || 'Unknown' }}</td>
+        <td>{{ t.message }}</td>
+        <td [class]="t.status">{{ t.status }}</td>
+        <td>{{ t.rejectionReason || '—' }}</td>
+        <td>
+          <button *ngIf="t.status === 'pending'" class="btn-approve" (click)="approve(t._id)">Approve</button>
+          <button *ngIf="t.status === 'pending'" class="btn-reject" (click)="reject(t._id)">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !testimonials.length" class="empty">No testimonials found</p>
+</div>
